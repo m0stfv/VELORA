@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="title desc">
+  <title id="title">VELORA product placeholder</title>
+  <desc id="desc">A warm neutral placeholder for a fashion product image</desc>
+  <rect width="800" height="1000" fill="#e7e0cf"/>
+  <path d="M180 840c30-190 88-340 160-430l60-65 60 65c72 90 130 240 160 430H180Z" fill="#8b7355" opacity=".82"/>
+  <path d="M340 345h120M280 470h240" stroke="#f6f3ec" stroke-width="8" opacity=".65"/>
+  <text x="400" y="930" fill="#2a2823" font-family="Georgia,serif" font-size="38" letter-spacing="12" text-anchor="middle">VELORA</text>
+</svg>

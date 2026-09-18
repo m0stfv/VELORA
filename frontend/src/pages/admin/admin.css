@@ -1,0 +1,287 @@
+.admin-shell {
+  --admin-ink: #f7f4ee;
+  --admin-soft: #d8c6ad;
+  --admin-muted: #b7ac9f;
+  --admin-cream: #171614;
+  --admin-paper: #23211f;
+  --admin-stone: #2d2a27;
+  --admin-line: rgba(247, 244, 238, 0.12);
+  --admin-burgundy: #8f5a5e;
+  --admin-brown: #5a4637;
+  --admin-panel-alt: #2d2a27;
+  min-height: 100vh;
+  background: var(--admin-cream);
+  color: var(--admin-ink);
+}
+
+.admin-sidebar {
+  background: #1e1e1e;
+  color: var(--admin-ink);
+  border-right: 1px solid rgba(244, 240, 232, 0.12);
+}
+
+.admin-sidebar a,
+.admin-sidebar button {
+  border-left: 2px solid transparent;
+  color: rgba(244, 240, 232, 0.7);
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.admin-sidebar a:hover,
+.admin-sidebar button:hover,
+.admin-sidebar a[aria-current="page"] {
+  border-left-color: var(--admin-burgundy);
+  background: rgba(244, 240, 232, 0.08);
+  color: var(--admin-ink);
+}
+
+.admin-content {
+  background: var(--admin-cream);
+  color: var(--admin-ink);
+}
+
+.admin-page {
+  min-height: 100%;
+  padding: clamp(1.25rem, 3vw, 3.5rem);
+}
+
+.admin-kicker {
+  color: var(--admin-soft);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.admin-title {
+  color: var(--admin-ink);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  font-weight: 500;
+  line-height: 0.95;
+}
+
+.admin-panel,
+.admin-table-wrap {
+  border: 1px solid var(--admin-line);
+  background: var(--admin-paper);
+  box-shadow: none;
+}
+
+.admin-stat {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--admin-line);
+  background: var(--admin-paper);
+  padding: 1.4rem;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.admin-stat:hover {
+  border-color: var(--admin-burgundy);
+  transform: translateY(-2px);
+}
+
+.admin-stat::after {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  color: var(--admin-soft);
+  content: "↗";
+  font-size: 1.2rem;
+}
+
+.admin-stat-label {
+  color: var(--admin-muted);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.admin-stat-value {
+  display: block;
+  margin-top: 1rem;
+  color: var(--admin-ink);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.admin-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(247, 244, 238, 0.2);
+  background: #f7f4ee;
+  color: #171614;
+  padding: 0.72rem 1rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.admin-button:hover {
+  background: var(--admin-burgundy);
+  border-color: var(--admin-burgundy);
+  color: var(--admin-ink);
+  transform: translateY(-1px);
+}
+
+.admin-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-action-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 120px;
+  border: 1px solid var(--admin-line);
+  background: rgba(247, 244, 238, 0.02);
+  color: var(--admin-ink);
+  padding: 1.1rem 1rem;
+  text-align: left;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.admin-action-card:hover {
+  border-color: rgba(143, 90, 94, 0.6);
+  background: rgba(143, 90, 94, 0.08);
+  transform: translateY(-1px);
+}
+
+.admin-action-card .label {
+  display: block;
+  color: var(--admin-muted);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.admin-action-card .title {
+  display: block;
+  margin-top: 0.7rem;
+  color: var(--admin-ink);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.admin-input,
+.admin-select,
+.admin-textarea {
+  width: 100%;
+  border: 1px solid var(--admin-line);
+  background: var(--admin-paper);
+  color: var(--admin-ink);
+  caret-color: var(--admin-ink);
+  padding: 0.7rem 0.8rem;
+  outline: none;
+}
+
+.admin-input::placeholder,
+.admin-textarea::placeholder {
+  color: var(--admin-muted);
+}
+
+.admin-input:focus,
+.admin-select:focus,
+.admin-textarea:focus {
+  border-color: var(--admin-burgundy);
+  box-shadow: 0 0 0 2px rgba(143, 90, 94, 0.15);
+}
+
+.admin-table {
+  min-width: 720px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  background: var(--admin-stone);
+  color: var(--admin-muted);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.admin-content .admin-panel,
+.admin-content .admin-table-wrap,
+.admin-content .admin-stat {
+  background: var(--admin-paper);
+  color: var(--admin-ink);
+}
+
+.admin-shell header {
+  background: #1e1e1e !important;
+  color: var(--admin-ink) !important;
+}
+
+.admin-content h1,
+.admin-content h2,
+.admin-content h3,
+.admin-content h4 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+}
+
+.admin-content .font-serif {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+.admin-table td,
+.admin-table th {
+  border-bottom: 1px solid var(--admin-line);
+  padding: 0.9rem 1rem;
+  vertical-align: middle;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(247, 244, 238, 0.03);
+}
+
+.admin-badge {
+  display: inline-flex;
+  border: 1px solid var(--admin-line);
+  padding: 0.35rem 0.55rem;
+  color: var(--admin-soft);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admin-badge-burgundy {
+  border-color: rgba(143, 90, 94, 0.4);
+  color: var(--admin-soft);
+}
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    left: 0;
+    top: 0;
+    z-index: 40;
+  }
+
+  .admin-sidebar.admin-drawer-closed {
+    transform: translateX(-100%);
+  }
+
+  .admin-page {
+    padding: 1.1rem;
+  }
+
+  .admin-table-wrap {
+    overflow-x: auto;
+  }
+}
+
+.admin-lang-toggle { border: 1px solid rgba(247,244,238,.16); padding: .55rem .75rem; font-size: .65rem; letter-spacing: .12em; color: #f7f4ee; background: transparent; }
+.admin-lang-toggle:hover { background: rgba(247,244,238,.08); }
+.admin-content label { color: #f7f4ee; font-size: .82rem; }
+.admin-content input::placeholder, .admin-content textarea::placeholder { color: #8f887f; opacity: 1; }
+.admin-content select option { background: #242321; color: #f7f4ee; }
