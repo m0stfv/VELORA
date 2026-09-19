@@ -6,6 +6,9 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const uploadDir = process.env.VERCEL === '1'
+	? path.join('/tmp', 'uploads')
+	: path.join(__dirname, '..', 'uploads');
 const authRoutes = require('./routes/authRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const productRoutes = require('./routes/productRoutes');
@@ -34,7 +37,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve uploaded product images
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+app.use('/uploads', express.static(uploadDir));
 
 // ============================================
 // ROUTES

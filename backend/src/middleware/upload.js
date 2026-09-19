@@ -3,7 +3,9 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 
-const uploadDir = path.join(__dirname, '..', '..', 'uploads');
+const uploadDir = process.env.VERCEL === '1'
+  ? path.join('/tmp', 'uploads')
+  : path.join(__dirname, '..', '..', 'uploads');
 
 // Ensure the uploads directory exists
 if (!fs.existsSync(uploadDir)) {
