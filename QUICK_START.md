@@ -1,6 +1,6 @@
 # VELORA - Quick Start Guide
 
-## ⚡ 5-Minute Setup
+##  5-Minute Setup
 
 ### Prerequisites
 - Node.js v14+ installed
@@ -59,7 +59,7 @@ VITE v8.3.0  ready in XXX ms
 ➜  Local:   http://localhost:5173/
 ```
 
-## ✅ Verify Installation
+##  Verify Installation
 
 ### Test Backend APIs
 
@@ -83,7 +83,7 @@ Open http://localhost:5173 in your browser
 
 Should see VELORA homepage with navigation
 
-## 🔐 Test Credentials
+##  Test Credentials
 
 **After running `npm run seed`:**
 
@@ -97,7 +97,7 @@ Regular User:
 - Password: password123
 ```
 
-## 📍 Key URLs
+##  Key URLs
 
 | Service | URL | Purpose |
 |---------|-----|---------|
@@ -106,7 +106,7 @@ Regular User:
 | Frontend | http://localhost:5173 | User interface |
 | MongoDB | localhost:27017 | Database (if local) |
 
-## 🛠️ Common Commands
+##  Common Commands
 
 ### Backend
 ```bash
@@ -122,7 +122,7 @@ npm run build    # Create production build
 npm run lint     # Run linter
 ```
 
-## 🚨 Troubleshooting
+##  Troubleshooting
 
 ### MongoDB Connection Failed
 
@@ -191,7 +191,7 @@ After seeding, database contains:
   - Realistic stock levels
   - Images from Unsplash
 
-## 🧪 Testing API Endpoints
+##  Testing API Endpoints
 
 ### Using Postman
 
@@ -254,7 +254,7 @@ curl http://localhost:5000/api/cart \
   -H "Authorization: Bearer TOKEN"
 ```
 
-## 🎯 Next Steps
+##  Next Steps
 
 ### Immediate (Testing)
 1. Verify backend & frontend running
@@ -280,14 +280,14 @@ curl http://localhost:5000/api/cart \
 3. Deploy frontend to Vercel/Netlify
 4. Update API URLs for production
 
-## 📚 Documentation Files
+##  Documentation Files
 
 - **README.md** - Full project documentation
 - **FRONTEND_GUIDE.md** - Frontend development guide
 - **IMPLEMENTATION_SUMMARY.md** - What was built
 - **This file** - Quick start guide
 
-## 🔗 Useful Links
+##  Useful Links
 
 - [Express.js Docs](https://expressjs.com)
 - [Mongoose Docs](https://mongoosejs.com)
@@ -297,11 +297,11 @@ curl http://localhost:5000/api/cart \
 - [React Router](https://reactrouter.com)
 - [Zustand](https://github.com/pmndrs/zustand)
 
-## ✨ Project Structure Overview
+##  Project Structure Overview
 
 ```
 VELORA/
-├── backend/          # Backend API (COMPLETE ✅)
+├── backend/          # Backend API (COMPLETE )
 │   ├── src/
 │   │   ├── config/   # DB connection
 │   │   ├── controllers/  # Business logic
@@ -328,39 +328,36 @@ VELORA/
     └── QUICK_START.md (this file)
 ```
 
-## 🎓 What You Have
+##  What You Have
 
-✅ **Complete Backend API**
+ **Complete Backend API**
 - 40+ endpoints
 - Full CRUD operations
 - Authentication & authorization
 - Data validation
 - Error handling
 
-✅ **Database Setup**
+ **Database Setup**
 - 7 interconnected models
 - Proper indexes
 - Relationships configured
 - Sample data ready
 
-✅ **Frontend Foundation**
+ **Frontend Foundation**
 - Vite setup
 - Tailwind CSS configured
 - Zustand ready
 - API service ready
 
-✅ **Documentation**
+ **Documentation**
 - API endpoints documented
 - Setup guides
 - Frontend guide
 - Code examples
 
-## 🚀 You're Ready to Go!
+##  You're Ready to Go!
 
 The backend is 100% functional. Start building your frontend components and integrate them with the APIs.
-
-**Happy coding! 🎉**
-
 ---
 
 For issues or questions, check:
