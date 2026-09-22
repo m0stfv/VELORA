@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Plus, Edit2, Trash2, Upload, X } from 'lucide-react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import api from '../../services/api';
 import LoadingSpinner from '../../components/LoadingSpinner';
@@ -19,7 +20,20 @@ const emptyForm = {
   images: [],
 };
 
+const getProductFormData = (product, lang) => ({
+  name: getProductName(product, lang),
+  description: getProductDescription(product, lang),
+  price: product.price,
+  discountPrice: product.discountPrice || '',
+  stock: product.stock,
+  category: product.category?._id || '',
+  brand: product.brand || '',
+  images: product.images || [],
+});
+
 export default function ProductManagement() {
+  const navigate = useNavigate();
+  const { productId } = useParams();
   const { t, lang } = useLanguage();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -52,9 +66,21 @@ export default function ProductManagement() {
   };
 
   useEffect(() => {
-    fetchProducts();
     fetchCategories();
-  }, []);
+    if (productId) {
+      api.get(`/products/${productId}`)
+        .then((response) => {
+          const product = response.data.data;
+          setFormData(getProductFormData(product, lang));
+          setEditingId(product._id);
+          setShowForm(true);
+        })
+        .catch((err) => setError(err.response?.data?.message || err.message))
+        .finally(() => setLoading(false));
+      return;
+    }
+    fetchProducts();
+  }, [productId, lang]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -118,6 +144,7 @@ export default function ProductManagement() {
       setFormData(emptyForm);
       setShowForm(false);
       setEditingId(null);
+      if (productId) navigate('/admin/products');
     } catch (err) {
       setError(err.response?.data?.message || err.message);
     }
@@ -134,18 +161,7 @@ export default function ProductManagement() {
   };
 
   const handleEdit = (product) => {
-    setFormData({
-      name: getProductName(product, lang),
-      description: getProductDescription(product, lang),
-      price: product.price,
-      discountPrice: product.discountPrice || '',
-      stock: product.stock,
-      category: product.category?._id || '',
-      brand: product.brand || '',
-      images: product.images || [],
-    });
-    setEditingId(product._id);
-    setShowForm(true);
+    navigate(`/admin/products/${product._id}/edit`);
   };
 
   if (loading) return <LoadingSpinner />;
@@ -156,6 +172,10 @@ export default function ProductManagement() {
         <div><p className="admin-kicker">{t.adminProducts}</p><h1 className="admin-title mt-3">{t.adminProductsTitle}</h1></div>
         <button
           onClick={() => {
+            if (productId) {
+              navigate('/admin/products');
+              return;
+            }
             setShowForm(!showForm);
             setEditingId(null);
             setFormData(emptyForm);
@@ -163,7 +183,7 @@ export default function ProductManagement() {
           className="admin-button"
         >
           <Plus size={20} />
-          Add Product
+          {productId ? t.adminProducts : 'Add Product'}
         </button>
       </div>
 
@@ -317,7 +337,7 @@ export default function ProductManagement() {
               </button>
               <button
                 type="button"
-                onClick={() => setShowForm(false)}
+                onClick={() => productId ? navigate('/admin/products') : setShowForm(false)}
                 className="admin-button bg-transparent !text-[#282622]"
               >
                 Cancel
@@ -354,7 +374,13 @@ export default function ProductManagement() {
                 <td className="px-6 py-4">{product.stock}</td>
                 <td className="px-6 py-4 flex gap-2">
                   <button
-                    onClick={() => handleEdit(product)}
+                    type="button"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      handleEdit(product);
+                    }}
+                    aria-label={`${t.adminEditProduct}: ${getProductName(product, lang)}`}
                     className="p-2 text-blue-600 hover:bg-blue-100 rounded transition"
                   >
                     <Edit2 size={18} />

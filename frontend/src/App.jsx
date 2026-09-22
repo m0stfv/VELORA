@@ -160,6 +160,7 @@ function AnimatedRoutes() {
         >
           <Route index element={<AdminDashboard />} />
           <Route path="products" element={<ProductManagement />} />
+          <Route path="products/:productId/edit" element={<ProductManagement />} />
           <Route path="categories" element={<CategoryManagement />} />
           <Route path="orders" element={<OrderManagement />} />
           <Route path="users" element={<UserManagement />} />
