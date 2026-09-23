@@ -14,9 +14,24 @@ const resolveImageSrc = (src) => {
   return src.startsWith('/') ? `${cleanBase}${src}` : `${cleanBase}/${normalized}`;
 };
 
+const getResponsiveSources = (src) => {
+  if (!src || !src.startsWith('/images/')) return null;
+  const extensionIndex = src.lastIndexOf('.');
+  if (extensionIndex < 0) return null;
+  const base = src.slice(0, extensionIndex);
+  return {
+    mobile: `${base.replace('/images/', '/images/optimized/mobile/')}.webp`,
+    desktop: `${base.replace('/images/', '/images/optimized/desktop/')}.webp`,
+    large: `${base.replace('/images/', '/images/optimized/large/')}.webp`,
+  };
+};
+
 export default function ProductImage({ src, alt, className = '', ...props }) {
   const [failed, setFailed] = useState(false);
   const resolvedSrc = resolveImageSrc(src);
+  const responsiveSources = getResponsiveSources(src);
+  const loading = props.loading || 'lazy';
+  const sizes = props.sizes || '(max-width: 767px) 100vw, 50vw';
   const showPlaceholder = !resolvedSrc || failed;
 
   if (showPlaceholder) {
@@ -30,5 +45,43 @@ export default function ProductImage({ src, alt, className = '', ...props }) {
     );
   }
 
-  return <img {...props} src={resolvedSrc} alt={alt} loading={props.loading || 'lazy'} className={className} onError={() => setFailed(true)} />;
+  const handleError = (event) => {
+    if (responsiveSources && event.currentTarget.dataset.fallback !== 'true') {
+      event.currentTarget.dataset.fallback = 'true';
+      event.currentTarget.removeAttribute('srcset');
+      event.currentTarget.src = resolvedSrc;
+      return;
+    }
+    setFailed(true);
+  };
+
+  if (!responsiveSources) {
+    return <img {...props} src={resolvedSrc} alt={alt} loading={loading} sizes={sizes} className={className} onError={handleError} />;
+  }
+
+  return (
+    <picture>
+      <source
+        media="(max-width: 767px)"
+        type="image/webp"
+        srcSet={`${responsiveSources.mobile} 640w, ${responsiveSources.desktop} 1280w`}
+        sizes={sizes}
+      />
+      <source
+        type="image/webp"
+        srcSet={`${responsiveSources.desktop} 1280w, ${responsiveSources.large} 1920w`}
+        sizes={sizes}
+      />
+      <img
+        {...props}
+        src={responsiveSources.desktop}
+        srcSet={`${responsiveSources.desktop} 1280w, ${responsiveSources.large} 1920w`}
+        sizes={sizes}
+        alt={alt}
+        loading={loading}
+        className={className}
+        onError={handleError}
+      />
+    </picture>
+  );
 }

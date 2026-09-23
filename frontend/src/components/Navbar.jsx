@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Globe, Heart, LogOut, Menu, Search, Settings, ShoppingBag, User, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Globe, Heart, LogOut, Menu, Search, Settings, ShoppingBag, User, X } from 'lucide-react';
 import { useAuthStore } from '../stores/authStore';
 import { useCartStore } from '../stores/cartStore';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -70,7 +70,7 @@ export default function Navbar({ overlay = false }) {
           </nav>
 
           <div className={`flex items-center justify-end gap-4 ${dark ? 'text-cream' : 'text-ink-soft'}`}>
-            <button type="button" onClick={() => setSearchOpen(true)} aria-label={isAr ? 'بحث' : 'Search'}><Search size={16} strokeWidth={1.4} /></button>
+            <button type="button" onClick={() => setSearchOpen(true)} className="flex h-10 w-10 items-center justify-center" aria-label={isAr ? 'بحث' : 'Search'}><Search size={16} strokeWidth={1.4} /></button>
             <button type="button" onClick={() => setLang((value) => value === 'ar' ? 'en' : 'ar')} className="hidden text-[10px] tracking-widest2 md:block">{lang === 'ar' ? 'EN' : 'AR'}</button>
             {isAuthenticated && <Link to="/wishlist" aria-label={isAr ? 'المفضلة' : 'Wishlist'}><Heart size={16} strokeWidth={1.4} /></Link>}
             {isAuthenticated ? (
@@ -110,36 +110,82 @@ export default function Navbar({ overlay = false }) {
               <Link to="/login" aria-label="Account" className="hidden md:block"><User size={16} strokeWidth={1.4} /></Link>
             )}
             <Link to={isAuthenticated ? '/profile' : '/login'} aria-label="Account" className="md:hidden"><User size={16} strokeWidth={1.4} /></Link>
-            <Link to="/cart" className="relative" aria-label={isAr ? 'السلة' : 'Cart'}>
+            <Link to="/cart" className="relative flex h-10 w-10 items-center justify-center" aria-label={isAr ? 'السلة' : 'Cart'}>
               <ShoppingBag size={16} strokeWidth={1.4} />
               <span className="absolute -right-2.5 -top-2 text-[9px]">{items.length}</span>
             </Link>
-            <button type="button" onClick={() => setMenuOpen(true)} className="md:hidden" aria-label={isAr ? 'فتح القائمة' : 'Open menu'}><Menu size={17} /></button>
+            <button type="button" onClick={() => setMenuOpen(true)} className="flex h-10 w-10 items-center justify-center md:hidden" aria-label={isAr ? 'فتح القائمة' : 'Open menu'}><Menu size={17} /></button>
           </div>
         </div>
       </header>
 
       {menuOpen && (
-        <div className="fixed inset-0 z-[60] bg-cream p-6 text-ink" role="dialog" aria-modal="true">
-          <div className="flex items-center justify-between border-b border-stone-dark pb-5">
+        <div className="fixed inset-0 z-[60] flex flex-col bg-cream text-ink" role="dialog" aria-modal="true">
+          <div className="flex items-center justify-between border-b border-stone-dark px-6 pb-5 pt-6">
             <span className="font-serif text-2xl tracking-[0.25em]">VELORA</span>
-            <button type="button" onClick={() => setMenuOpen(false)} aria-label={isAr ? 'إغلاق' : 'Close'}><X size={21} /></button>
+            <button type="button" onClick={() => setMenuOpen(false)} className="flex h-11 w-11 items-center justify-center" aria-label={isAr ? 'إغلاق' : 'Close'}><X size={21} /></button>
           </div>
-          <nav className="flex flex-col gap-5 py-12 font-serif text-4xl">
-            {navItems.map(([path, label]) => <Link key={path} to={path} onClick={() => setMenuOpen(false)}>{label}</Link>)}
-            <Link to="/shop?category=shirts" onClick={() => setMenuOpen(false)}>{isAr ? 'قمصان' : 'Shirts'}</Link>
-            <Link to="/shop?category=coats-outerwear" onClick={() => setMenuOpen(false)}>{isAr ? 'معاطف' : 'Coats & Outerwear'}</Link>
-            <Link to="/shop?category=knitwear" onClick={() => setMenuOpen(false)}>{isAr ? 'تريكو' : 'Knitwear'}</Link>
-            <Link to="/shop?category=trousers" onClick={() => setMenuOpen(false)}>{isAr ? 'بناطيل' : 'Trousers'}</Link>
-            <Link to="/shop?category=accessories" onClick={() => setMenuOpen(false)}>{isAr ? 'إكسسوارات' : 'Accessories'}</Link>
-            {isAuthenticated && <Link to="/orders" onClick={() => setMenuOpen(false)}>{isAr ? 'طلباتي' : 'Orders'}</Link>}
-          </nav>
-          <div className="flex gap-5 border-t border-stone-dark pt-5 text-[10px] tracking-[0.18em]">
-            <button type="button" onClick={() => { setLang((value) => value === 'ar' ? 'en' : 'ar'); setMenuOpen(false); }}>
-              <Globe size={14} className="mr-2 inline" />{lang === 'ar' ? 'ENGLISH' : 'العربية'}
-            </button>
-            {user?.role === 'ADMIN' && <Link to="/admin" onClick={() => setMenuOpen(false)}>ADMIN</Link>}
-            {isAuthenticated && <button type="button" onClick={() => { logout(); setMenuOpen(false); }}>LOGOUT</button>}
+          <div className="flex-1 overflow-y-auto px-6 pb-8">
+            <nav className="space-y-8 py-8" aria-label={isAr ? 'القائمة الرئيسية' : 'Main menu'}>
+              <section>
+                <p className="mb-3 text-[9px] font-medium tracking-[0.22em] text-muted">{isAr ? 'التنقل' : 'NAVIGATION'}</p>
+                <div className="divide-y divide-stone-dark/70 border-y border-stone-dark/70">
+                  {navItems.map(([path, label]) => (
+                    <Link key={path} to={path} onClick={() => setMenuOpen(false)} className="flex min-h-14 items-center justify-between gap-4 py-3 font-serif text-2xl">
+                      <span>{label}</span>
+                      {isAr ? <ChevronLeft size={17} strokeWidth={1.2} /> : <ChevronRight size={17} strokeWidth={1.2} />}
+                    </Link>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <p className="mb-3 text-[9px] font-medium tracking-[0.22em] text-muted">{isAr ? 'المتجر' : 'SHOP'}</p>
+                <div className="space-y-1">
+                  {[
+                    ['/shop?category=shirts', isAr ? 'قمصان' : 'Shirts'],
+                    ['/shop?category=coats-outerwear', isAr ? 'معاطف' : 'Coats & Outerwear'],
+                    ['/shop?category=knitwear', isAr ? 'تريكو' : 'Knitwear'],
+                    ['/shop?category=trousers', isAr ? 'بناطيل' : 'Trousers'],
+                    ['/shop?category=accessories', isAr ? 'إكسسوارات' : 'Accessories'],
+                  ].map(([path, label]) => (
+                    <Link key={path} to={path} onClick={() => setMenuOpen(false)} className="flex min-h-12 items-center justify-between gap-4 border-b border-stone-dark/50 py-2 text-sm">
+                      <span>{label}</span>
+                      {isAr ? <ChevronLeft size={15} strokeWidth={1.2} /> : <ChevronRight size={15} strokeWidth={1.2} />}
+                    </Link>
+                  ))}
+                </div>
+              </section>
+
+              {(isAuthenticated || user?.role === 'ADMIN') && (
+                <section>
+                  <p className="mb-3 text-[9px] font-medium tracking-[0.22em] text-muted">{isAr ? 'الحساب' : 'ACCOUNT'}</p>
+                  <div className="space-y-1">
+                    {isAuthenticated && <Link to="/profile" onClick={() => setMenuOpen(false)} className="flex min-h-12 items-center gap-3 border-b border-stone-dark/50 py-2 text-sm"><User size={16} strokeWidth={1.3} />{isAr ? 'حسابي' : 'My Profile'}</Link>}
+                    {isAuthenticated && <Link to="/wishlist" onClick={() => setMenuOpen(false)} className="flex min-h-12 items-center gap-3 border-b border-stone-dark/50 py-2 text-sm"><Heart size={16} strokeWidth={1.3} />{isAr ? 'المفضلة' : 'Wishlist'}</Link>}
+                    {isAuthenticated && <Link to="/orders" onClick={() => setMenuOpen(false)} className="flex min-h-12 items-center gap-3 border-b border-stone-dark/50 py-2 text-sm"><ShoppingBag size={16} strokeWidth={1.3} />{isAr ? 'طلباتي' : 'Orders'}</Link>}
+                    {user?.role === 'ADMIN' && <Link to="/admin" onClick={() => setMenuOpen(false)} className="flex min-h-12 items-center gap-3 border-b border-stone-dark/50 py-2 text-sm"><Settings size={16} strokeWidth={1.3} />{isAr ? 'لوحة التحكم' : 'Admin Dashboard'}</Link>}
+                  </div>
+                </section>
+              )}
+            </nav>
+
+            <div className="flex flex-col gap-3 border-t border-stone-dark pt-5 text-[10px] tracking-[0.16em]">
+              <button type="button" onClick={() => { setLang((value) => value === 'ar' ? 'en' : 'ar'); setMenuOpen(false); }} className="flex min-h-12 items-center gap-3 text-left">
+                <Globe size={15} strokeWidth={1.3} />
+                <span>{lang === 'ar' ? 'العربية' : 'English'}</span>
+                <span className="ml-auto text-muted">{lang === 'ar' ? 'ENGLISH' : 'العربية'}</span>
+              </button>
+              {isAuthenticated ? (
+                <button type="button" onClick={() => { logout(); setMenuOpen(false); }} className="flex min-h-12 items-center gap-3 border-t border-stone-dark/70 pt-3 text-left">
+                  <LogOut size={15} strokeWidth={1.3} /> {isAr ? 'تسجيل الخروج' : 'Log out'}
+                </button>
+              ) : (
+                <Link to="/login" onClick={() => setMenuOpen(false)} className="flex min-h-12 items-center gap-3 border-t border-stone-dark/70 pt-3">
+                  <User size={15} strokeWidth={1.3} /> {isAr ? 'تسجيل الدخول' : 'Log in'}
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       )}

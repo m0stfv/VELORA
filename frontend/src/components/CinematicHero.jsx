@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
+import ProductImage from './ProductImage';
 
 export default function CinematicHero({
   eyebrow,
@@ -23,7 +24,7 @@ export default function CinematicHero({
 
   return (
     <section className={`relative overflow-hidden bg-ink ${minHeight} text-cream`}>
-      {image && <img src={image} alt={imageAlt || ''} className="absolute inset-0 h-full w-full object-cover object-[center_20%]" />}
+      {image && <ProductImage src={image} alt={imageAlt || ''} loading="eager" fetchPriority="high" sizes="100vw" className="absolute inset-0 h-full w-full object-cover object-[center_20%]" />}
       <div className="absolute inset-0 bg-ink/55" />
       <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/25 to-ink/40" />
       <Navbar overlay />
