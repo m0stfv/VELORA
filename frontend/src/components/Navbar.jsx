@@ -110,9 +110,21 @@ export default function Navbar({ overlay = false }) {
               <Link to="/login" aria-label="Account" className="hidden md:block"><User size={16} strokeWidth={1.4} /></Link>
             )}
             <Link to={isAuthenticated ? '/profile' : '/login'} aria-label="Account" className="md:hidden"><User size={16} strokeWidth={1.4} /></Link>
-            <Link to="/cart" className="relative flex h-10 w-10 items-center justify-center" aria-label={isAr ? 'السلة' : 'Cart'}>
-              <ShoppingBag size={16} strokeWidth={1.4} />
-              <span className="absolute -right-2.5 -top-2 text-[9px]">{items.length}</span>
+            <Link
+              to="/cart"
+              className="group relative flex h-10 w-10 items-center justify-center overflow-visible"
+              aria-label={isAr ? 'السلة' : 'Cart'}
+              title={isAr ? 'السلة' : 'Cart'}
+            >
+              <ShoppingBag size={17} strokeWidth={1.35} className="transition duration-200 group-hover:scale-[1.04] group-hover:opacity-80" />
+              {items.length > 0 && (
+                <span
+                  className="pointer-events-none absolute top-[7px] z-10 flex h-4 w-4 items-center justify-center rounded-full bg-clay text-[8px] font-medium leading-none text-cream transition duration-200 group-hover:scale-105 group-hover:opacity-90"
+                  style={isAr ? { left: '7px' } : { right: '7px' }}
+                >
+                  {items.length}
+                </span>
+              )}
             </Link>
             <button type="button" onClick={() => setMenuOpen(true)} className="flex h-10 w-10 items-center justify-center md:hidden" aria-label={isAr ? 'فتح القائمة' : 'Open menu'}><Menu size={17} /></button>
           </div>
